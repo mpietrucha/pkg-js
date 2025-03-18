@@ -1,4 +1,5 @@
 import { createBuilder, useBuilder } from '@/builder'
+import { useDefaultProperty } from '@/use'
 
 export class Router {
     #builder
@@ -34,4 +35,4 @@ export class Router {
 
 export const createRouter = useBuilder(Router)
 
-export const useRouter = useBuilder(Router, 'get')
+export const useRouter = useBuilder(Router, useDefaultProperty())
