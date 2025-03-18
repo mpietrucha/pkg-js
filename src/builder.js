@@ -1,6 +1,6 @@
 import { createFreeze } from '@/freeze'
-import { use } from '@mpietrucha/use'
-import { isFunction } from 'lodash-es'
+import { createDefferedUse, createUse } from '@/use'
+import { flow as createPipeline, isEmpty, isFunction } from 'lodash-es'
 
 export class Builder {
     #source
@@ -34,6 +34,13 @@ export const createBuilder = source => {
     return createFreeze(new Builder(source))
 }
 
-export const useBuilder = source => {
-    return use(createBuilder(source), 'get')
+export const useBuilder = (source, ...parameters) => {
+    if (isEmpty(parameters)) {
+        return createUse(createBuilder(source))
+    }
+
+    return createPipeline(
+        useBuilder(source),
+        createDefferedUse(parameters.shift()),
+    )
 }

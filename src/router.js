@@ -1,6 +1,4 @@
-import { createBuilder } from '@/builder'
-import { createFreeze } from '@/freeze'
-import { use } from '@mpietrucha/use'
+import { createBuilder, useBuilder } from '@/builder'
 
 export class Router {
     #builder
@@ -34,10 +32,6 @@ export class Router {
     }
 }
 
-export const createRouter = source => {
-    return createFreeze(new Router(source))
-}
+export const createRouter = useBuilder(Router)
 
-export const useRouter = source => {
-    return use(createRouter(source), 'get')
-}
+export const useRouter = useBuilder(Router, 'get')
