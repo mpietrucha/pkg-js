@@ -1,6 +1,7 @@
 import { createFreeze } from '@/freeze'
 import { createUse } from '@/use'
-import { flow as createPipeline, isEmpty, isFunction } from 'lodash-es'
+import { flow as createPipeline, isEmpty } from 'lodash-es'
+import { is } from '@mpietrucha/is'
 
 export class Builder {
     #source
@@ -14,7 +15,7 @@ export class Builder {
     }
 
     valid() {
-        return isFunction(this.source())
+        return is(this.source(), Function)
     }
 
     invalid() {

@@ -1,4 +1,5 @@
 import { createBuilder, useBuilder } from '@/builder'
+import { is } from '@mpietrucha/is'
 
 export class Router {
     #builder
@@ -16,7 +17,7 @@ export class Router {
             return false
         }
 
-        return value instanceof this.builder().source()
+        return is(value, this.builder().source())
     }
 
     unsupported(value) {
