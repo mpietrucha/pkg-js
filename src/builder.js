@@ -1,7 +1,7 @@
 import { createFreeze } from '@/freeze'
 import { createUse } from '@/use'
-import { flow as createPipeline, isEmpty } from 'lodash-es'
-import { is } from '@mpietrucha/is'
+import { is, isEmpty } from '@mpietrucha/is'
+import { flow as createPipeline } from 'lodash-es'
 
 export class Builder {
     #source
