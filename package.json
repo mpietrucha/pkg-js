@@ -26,9 +26,9 @@
     },
     "prettier": "@mpietrucha/prettier",
     "dependencies": {
-        "@mpietrucha/is": "^0.0.1",
+        "@mpietrucha/is": "^0.0.13",
         "@mpietrucha/prettier": "^1.0.0",
-        "@mpietrucha/use": "^0.0.1",
+        "@mpietrucha/use": "^0.0.7",
         "lodash-es": "^4.17.21"
     },
     "devDependencies": {

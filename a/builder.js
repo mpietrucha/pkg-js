@@ -1,11 +1,22 @@
-import { createForward } from '@/forward'
 import { createFreeze } from '@/freeze'
-import { InteractsWithSource } from '@/interacts-with-source'
-import { is } from '@mpietrucha/is'
 
-export class Builder extends InteractsWithSource {
+export class Builder {
+    #source
+
+    constructor(source) {
+        this.#source = source
+    }
+
+    source() {
+        return this.#source
+    }
+
     valid() {
         return is(this.source(), Function)
+    }
+
+    invalid() {
+        return !this.valid()
     }
 
     get(...parameters) {
@@ -23,10 +34,4 @@ export class Builder extends InteractsWithSource {
 
 export const createBuilder = source => {
     return createFreeze(new Builder(source))
-}
-
-export const useBuilder = (source, property) => {
-    const builder = createBuilder(source)
-
-    return createForward(builder, 'get').get(property)
 }

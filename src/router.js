@@ -1,23 +1,14 @@
-import { createBuilder, useBuilder } from '@/builder'
+import { Builder, useBuilder } from '@/builder'
+import { createForward } from '@/forward'
 import { is } from '@mpietrucha/is'
 
-export class Router {
-    #builder
-
-    constructor(source) {
-        this.#builder = createBuilder(source)
-    }
-
-    builder() {
-        return this.#builder
-    }
-
+export class Router extends Builder {
     supported(value) {
-        if (this.builder().invalid()) {
-            return false
+        if (this.invalid()) {
+            return true
         }
 
-        return is(value, this.builder().source())
+        return is(value, this.source())
     }
 
     unsupported(value) {
@@ -29,10 +20,14 @@ export class Router {
             return value
         }
 
-        return this.builder().get(...parameters)
+        return super.get(...parameters)
     }
 }
 
 export const createRouter = useBuilder(Router)
 
-export const useRouter = useBuilder(Router, 'get')
+export const useRouter = (source, property) => {
+    const router = createRouter(source)
+
+    return createForward(router, 'get').get(property)
+}
