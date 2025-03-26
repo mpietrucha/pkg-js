@@ -26,12 +26,13 @@
     },
     "prettier": "@mpietrucha/prettier",
     "dependencies": {
-        "@mpietrucha/is": "^0.0.13",
+        "@mpietrucha/function": "^0.0.2",
+        "@mpietrucha/is": "^0.0.15",
         "@mpietrucha/prettier": "^1.0.0",
-        "@mpietrucha/use": "^0.0.7",
+        "@mpietrucha/use": "^0.0.9",
         "lodash-es": "^4.17.21"
     },
     "devDependencies": {
-        "unbuild": "^3.3.1"
+        "unbuild": "^3.5.0"
     }
 }

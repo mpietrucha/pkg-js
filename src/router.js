@@ -1,14 +1,9 @@
-import { Builder, useBuilder } from '@/builder'
-import { createForward } from '@/forward'
-import { is } from '@mpietrucha/is'
+import { Builder } from '@/builder'
+import { isInstanceOf } from '@mpietrucha/is'
 
 export class Router extends Builder {
     supported(value) {
-        if (this.invalid()) {
-            return true
-        }
-
-        return is(value, this.source())
+        return this.valid() && isInstanceOf(value, this.source())
     }
 
     unsupported(value) {
@@ -22,12 +17,12 @@ export class Router extends Builder {
 
         return super.get(...parameters)
     }
+
+    throwInvalidSourceError() {
+        throw new Error('Router source must be initializable')
+    }
 }
 
-export const createRouter = useBuilder(Router)
+export const useRouter = Router.usable()
 
-export const useRouter = (source, property) => {
-    const router = createRouter(source)
-
-    return createForward(router, 'get').get(property)
-}
+export const createRouter = Router.creatable()

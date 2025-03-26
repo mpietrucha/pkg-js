@@ -1,32 +1,82 @@
-import { createForward } from '@/forward'
-import { createFreeze } from '@/freeze'
-import { InteractsWithSource } from '@/interacts-with-source'
-import { is } from '@mpietrucha/is'
+import { usePipeline } from '@mpietrucha/function'
+import { isConstructor, isEmpty } from '@mpietrucha/is'
+import { createUseComposition, use } from '@mpietrucha/use'
 
-export class Builder extends InteractsWithSource {
+export class Builder {
+    #source
+
+    constructor(source) {
+        this.#source = source
+    }
+
+    source() {
+        return this.#source
+    }
+
     valid() {
-        return is(this.source(), Function)
+        return this.constructor.supported(this.source())
+    }
+
+    invalid() {
+        return !this.valid()
     }
 
     get(...parameters) {
         this.invalid() && this.throwInvalidSourceError()
 
-        const Source = this.source()
-
-        return createFreeze(new Source(...parameters))
+        return this.constructor.get(this.source(), ...parameters)
     }
 
     throwInvalidSourceError() {
+        this.constructor.throwInvalidSourceError()
+    }
+
+    static supported(source) {
+        return isConstructor(source)
+    }
+
+    static unsupported(source) {
+        return !this.supported(source)
+    }
+
+    static get(source, ...parameters) {
+        this.unsupported(source) && this.throwInvalidSourceError()
+
+        const Instance = source
+
+        return new Instance(...parameters)
+    }
+
+    static create(source) {
+        return this.get(this, source)
+    }
+
+    static use(source, ...property) {
+        const builder = this.create(source)
+
+        if (isEmpty(property)) {
+            return use(builder, 'get')
+        }
+
+        return usePipeline(
+            this.use(source),
+            createUseComposition(property.shift()),
+        )
+    }
+
+    static usable() {
+        return use(this, 'use')
+    }
+
+    static creatable() {
+        return use(this, 'create')
+    }
+
+    static throwInvalidSourceError() {
         throw new Error('Builder source must be initializable')
     }
 }
 
-export const createBuilder = source => {
-    return createFreeze(new Builder(source))
-}
+export const useBuilder = Builder.usable()
 
-export const useBuilder = (source, property) => {
-    const builder = createBuilder(source)
-
-    return createForward(builder, 'get').get(property)
-}
+export const createBuilder = Builder.creatable()
