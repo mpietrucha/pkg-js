@@ -18,7 +18,7 @@ export class Router extends Builder {
         return super.get(...parameters)
     }
 
-    throwInvalidSourceError() {
+    static throwInvalidSourceError() {
         throw new Error('Router source must be initializable')
     }
 }
