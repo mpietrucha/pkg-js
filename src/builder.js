@@ -1,6 +1,7 @@
 import { usePipeline } from '@mpietrucha/function'
 import { isConstructor, isEmpty } from '@mpietrucha/is'
 import { createUseComposition, use } from '@mpietrucha/use'
+import { negate } from '@mpietrucha/value'
 
 export class Builder {
     #source
@@ -18,7 +19,7 @@ export class Builder {
     }
 
     invalid() {
-        return !this.valid()
+        return negate(this.valid())
     }
 
     get(...parameters) {
@@ -36,7 +37,7 @@ export class Builder {
     }
 
     static unsupported(source) {
-        return !this.supported(source)
+        return negate(this.supported(source))
     }
 
     static get(source, ...parameters) {

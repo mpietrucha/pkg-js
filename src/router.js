@@ -7,7 +7,7 @@ export class Router extends Builder {
     }
 
     unsupported(value) {
-        return !this.supported(value)
+        return negate(this.supported(value))
     }
 
     get(value, ...parameters) {
