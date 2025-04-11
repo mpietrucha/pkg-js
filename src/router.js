@@ -1,5 +1,6 @@
 import { Builder } from '@/builder'
 import { isInstanceOf } from '@mpietrucha/is'
+import { useNegate } from '@mpietrucha/value'
 
 export class Router extends Builder {
     supported(value) {
@@ -7,7 +8,7 @@ export class Router extends Builder {
     }
 
     unsupported(value) {
-        return negate(this.supported(value))
+        return useNegate(this.supported(value))
     }
 
     get(value, ...parameters) {
