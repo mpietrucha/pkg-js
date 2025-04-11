@@ -37,7 +37,7 @@ export class Builder {
     }
 
     static unsupported(source) {
-        return negate(this.supported(source))
+        return useNegate(this.supported(source))
     }
 
     static get(source, ...parameters) {
