@@ -26,7 +26,7 @@
     },
     "prettier": "@mpietrucha/prettier",
     "dependencies": {
-        "@mpietrucha/function": "^0.0.2",
+        "@mpietrucha/function": "^0.0.3",
         "@mpietrucha/is": "^0.0.16",
         "@mpietrucha/use": "^0.0.11",
         "@mpietrucha/value": "^0.0.4"
