@@ -1,7 +1,7 @@
 import { usePipeline } from '@mpietrucha/function'
 import { isConstructor, isEmpty } from '@mpietrucha/is'
 import { createUseComposition, use } from '@mpietrucha/use'
-import { negate } from '@mpietrucha/value'
+import { useNegate } from '@mpietrucha/value'
 
 export class Builder {
     #source
@@ -19,7 +19,7 @@ export class Builder {
     }
 
     invalid() {
-        return negate(this.valid())
+        return useNegate(this.valid())
     }
 
     get(...parameters) {
